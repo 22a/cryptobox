@@ -28,8 +28,20 @@ class UploadsController < ApplicationController
 
     respond_to do |format|
       if @upload.save
-        format.html { redirect_to @upload, notice: 'Upload was successfully created.' }
-        format.json { render :show, status: :created, location: @upload }
+        @access = Access.new(user: current_user, upload: @upload, kind: :owner)
+        if @access.save
+          @upload.accesses << @access
+          if @upload.save
+            format.html { redirect_to @upload, notice: 'Upload was successfully created.' }
+            format.json { render :show, status: :created, location: @upload }
+          else
+            format.html { render :new }
+            format.json { render json: @upload.errors, status: :unprocessable_entity }
+          end
+        else
+          format.html { render :new }
+          format.json { render json: @upload.errors, status: :unprocessable_entity }
+        end
       else
         format.html { render :new }
         format.json { render json: @upload.errors, status: :unprocessable_entity }

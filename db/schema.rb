@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 20160404165707) do
   create_table "accesses", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "upload_id"
-    t.integer  "type"
+    t.integer  "kind"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

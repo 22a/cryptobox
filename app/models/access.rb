@@ -1,5 +1,5 @@
 class Access < ActiveRecord::Base
   belongs_to :user
   belongs_to :upload
-  enum type: [ :owner, :shared ]
+  enum kind: [ :owner, :shared ]
 end

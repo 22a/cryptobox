@@ -1,5 +1,5 @@
 class UploadsController < ApplicationController
-  before_action :set_upload, only: [:show, :edit, :update, :destroy]
+  before_action :set_upload, only: [:show, :edit, :update, :destroy, :decrypt]
 
   # GET /uploads
   # GET /uploads.json
@@ -19,6 +19,18 @@ class UploadsController < ApplicationController
 
   # GET /uploads/1/edit
   def edit
+  end
+
+  def decrypt
+    if @upload.users.include? current_user
+      parsed = URI::parse(@upload.data.url)
+      parsed.fragment = parsed.query = nil
+      enc = File.read("public" + parsed.to_s)
+      dec = SymmetricEncryption.decrypt enc
+      send_data dec, :filename => @upload.data_file_name, :type => @upload.data_content_type
+    else
+      redirect_to root_path, notice: "Nice try"
+    end
   end
 
   # POST /uploads

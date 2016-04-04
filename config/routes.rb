@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
 
   authenticate :user do
-    resources :uploads, only: [:new, :create, :destroy]
+    get '/uploads/:id/decrypt', to: 'uploads#decrypt', as: 'decrypt_upload'
+    resources :uploads, only: [:new, :create, :index, :destroy, :decrypt]
   end
   root 'home#index'
 

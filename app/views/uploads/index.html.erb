@@ -2,26 +2,4 @@
 
 <h1>All Uploads</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Filename</th>
-      <th>Size</th>
-      <th>Filetype</th>
-      <th>Last modified</th>
-      <th colspan="1"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @uploads.each do |upload| %>
-      <tr>
-        <td><%= upload.data_file_name %></td>
-        <td><%= upload.data_file_size %></td>
-        <td><%= upload.data_content_type %></td>
-        <td><%= upload.updated_at %></td>
-        <td><%= link_to 'Download', upload.data.url(:original) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= render 'list' %>

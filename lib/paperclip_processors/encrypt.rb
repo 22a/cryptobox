@@ -11,9 +11,10 @@ module Paperclip
     end
 
     def make
+      file_content = File.read(@file.path)
+      enc = SymmetricEncryption.encrypt file_content
       temp_file = Tempfile.new([@basename, @format])
-      puts @format
-      temp_file.write("fuck you")
+      temp_file.write(enc)
       temp_file.flush
       temp_file
     end

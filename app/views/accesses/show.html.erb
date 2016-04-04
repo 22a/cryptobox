@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @access.user %>
+</p>
+
+<p>
+  <strong>Upload:</strong>
+  <%= @access.upload %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @access.type %>
+</p>
+
+<%= link_to 'Edit', edit_access_path(@access) %> |
+<%= link_to 'Back', accesses_path %>

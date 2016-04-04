@@ -1,0 +1,6 @@
+Generated new Symmetric Key for encryption
+Put this value in your configuration file for :key
+"Ns\xECV\xD5a{\xAFu\xA7\x16\xA2\x89\xD6\xEAH"
+Generated new Initialization Vector for encryption
+Put this value in your configuration file for :iv
+"\r0\x8B\xD7[\x9A\r\xAB\xAB\x11F\xF4VOf\xFF"

@@ -43,6 +43,9 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-bootstrap'
 end
 
+# :lock: lock
+gem 'symmetric-encryption'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

@@ -1,8 +1,5 @@
-<p id="notice"><%= notice %></p>
-
-<h1>All Uploads</h1>
-
-<table>
+<div class="panel panel-success padded-panel">
+<table class="table">
   <thead>
     <tr>
       <th>Filename</th>
@@ -14,14 +11,15 @@
   </thead>
 
   <tbody>
-    <% @uploads.each do |upload| %>
+    <% Upload.all.find_each.each do |upload| %>
       <tr>
         <td><%= upload.data_file_name %></td>
         <td><%= upload.data_file_size %></td>
         <td><%= upload.data_content_type %></td>
         <td><%= upload.updated_at %></td>
-        <td><%= link_to 'Download', upload.data.url(:original) %></td>
+        <td><%= link_to 'Download', upload.data.url(:original), :target => "_blank" %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+</div>

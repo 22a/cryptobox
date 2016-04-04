@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
-  resources :accesses
-  resources :uploads
+
+  authenticate :user do
+    resources :uploads, only: [:new, :create, :destroy]
+  end
   root 'home#index'
 
   devise_for :users

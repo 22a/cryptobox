@@ -14,3 +14,8 @@
  *= require_self
  *= require bootstrap
  */
+
+.padded-panel {
+  width: 80vw;
+  margin-left: 10vw;
+}

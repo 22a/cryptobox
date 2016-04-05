@@ -30,6 +30,7 @@ class UploadsController < ApplicationController
     end
   end
 
+  # decrypt function, creates a temporary decrypted file to authorised users
   def decrypt
     if @upload.users.include? current_user
       parsed = URI::parse(@upload.data.url)
@@ -122,7 +123,6 @@ class UploadsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def upload_params
       if params[:upload]
-        puts "trying?????????????????????????????????????????????????????????"
         params.require(:upload).permit(:question_id, :data)
       else
         nil

@@ -34,3 +34,9 @@
 .tiny-pad {
   padding-top: 10px;
 }
+.alert{
+  position: absolute;
+  top: 90vh;
+  left: 10vw;
+  width: 80vw;
+}

@@ -72,7 +72,7 @@ class UploadsController < ApplicationController
         if @access.save
           @upload.accesses << @access
           if @upload.save
-            format.html { redirect_to root_path, notice: 'Upload was successfully created.' }
+            format.html { redirect_to edit_upload_path(@upload), notice: 'Upload was successfully created.' }
             format.json { render :show, status: :created, location: root_path }
           else
             format.html { render :new }

@@ -2,5 +2,10 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @upload %> |
-<%= link_to 'Back', uploads_path %>
+share email:
+<p>
+  <%= form_tag("share", method: "post") do %>
+    <%= email_field(:user, :email) %>
+    <%= submit_tag("Share") %>
+  <% end %>
+</p>

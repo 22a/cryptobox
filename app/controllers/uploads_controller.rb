@@ -1,5 +1,5 @@
 class UploadsController < ApplicationController
-  before_action :set_upload, only: [:show, :edit, :update, :destroy, :decrypt]
+  before_action :set_upload, only: [:show, :edit, :update, :destroy, :decrypt, :share]
 
   # GET /uploads
   # GET /uploads.json
@@ -30,6 +30,30 @@ class UploadsController < ApplicationController
       send_data dec, :filename => @upload.data_file_name, :type => @upload.data_content_type
     else
       redirect_to root_path, notice: "Nice try"
+    end
+  end
+
+  def share
+    if @upload.users.include? current_user
+      puts params
+      if params[:user][:email]
+        @user = User.find_by_email(params[:user][:email])
+        if @user
+          @access = Access.new(user: @user, upload: @upload, kind: :shared)
+          if @access.save
+            @upload.accesses << @access
+            redirect_to root_path, notice: "File Shared"
+          else
+            redirect_to edit_upload_path(@upload), alert: "Error Sharing"
+          end
+        else
+          redirect_to edit_upload_path(@upload), alert: "Unregistered Email"
+        end
+      else
+        redirect_to edit_upload_path(@upload), alert: "No email provided"
+      end
+    else
+      redirect_to root_path, alert: "Nice try"
     end
   end
 
@@ -80,7 +104,7 @@ class UploadsController < ApplicationController
   def destroy
     @upload.destroy
     respond_to do |format|
-      format.html { redirect_to uploads_url, notice: 'Upload was successfully destroyed.' }
+      format.html { redirect_to root_path, notice: 'Upload was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

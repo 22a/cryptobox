@@ -1,31 +1,28 @@
 <div class="panel panel-success padded-panel">
-<table class="table">
-  <thead>
-    <tr>
-      <th>Filename</th>
-      <th>Size</th>
-      <th>Filetype</th>
-      <th>Last modified</th>
-      <th colspan="1"></th>
-      <% if user_signed_in? %>
-        <th colspan="1"></th>
-      <% end %>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% Upload.all.find_each.each do |upload| %>
+  <div class="panel-heading">
+    <h3 class="panel-title">All Files</h3>
+  </div>
+  <table class="table">
+    <thead>
       <tr>
-        <td><%= upload.data_file_name %></td>
-        <td><%= upload.data_file_size %></td>
-        <td><%= upload.data_content_type %></td>
-        <td><%= upload.updated_at %></td>
-        <td><%= link_to 'Download', upload.data.url(:original), :target => "_blank" %></td>
-        <% if user_signed_in? %>
-          <td><%= link_to 'Decrypt', decrypt_upload_path(upload), :target => "_blank" %></td>
-        <% end %>
+        <th>Filename</th>
+        <th>Size</th>
+        <th>Filetype</th>
+        <th>Last modified</th>
+        <th colspan="1"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% Upload.all.find_each.each do |upload| %>
+        <tr>
+          <td><%= upload.data_file_name %></td>
+          <td><%= upload.data_file_size %></td>
+          <td><%= upload.data_content_type %></td>
+          <td><%= upload.updated_at %></td>
+          <td><%= link_to 'Download', upload.data.url(:original), :target => "_blank" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>

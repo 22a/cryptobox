@@ -14,7 +14,7 @@
     </thead>
 
     <tbody>
-      <% current_user.uploads.find_each.each do |upload| %>
+      <% current_user.uploads.find_each do |upload| %>
         <tr>
           <td><%= upload.data_file_name %></td>
           <td><%= upload.data_file_size %></td>
@@ -22,8 +22,10 @@
           <td><%= upload.updated_at %></td>
           <td><%= link_to 'Download', upload.data.url(:original), :target => "_blank" %></td>
           <td><%= link_to 'Decrypt', decrypt_upload_path(upload), :target => "_blank" %></td>
-          <td><%= link_to 'Share', edit_upload_path(upload) %></td>
-          <td><%= link_to 'Delete', upload_path(upload), data: {:confirm => 'Are you sure?'}, :method => :delete %></td>
+          <% if upload.accesses.owner.first.user == current_user %>
+            <td><%= link_to 'Share', edit_upload_path(upload) %></td>
+            <td><%= link_to 'Delete', upload_path(upload), data: {:confirm => 'Are you sure?'}, :method => :delete %></td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>

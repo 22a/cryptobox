@@ -1,5 +1,6 @@
 class UploadsController < ApplicationController
   before_action :set_upload, only: [:show, :edit, :update, :destroy, :decrypt, :share]
+  before_action :authenticate_owner, only: [:show, :edit, :update, :destroy, :share]
 
   # GET /uploads
   # GET /uploads.json
@@ -21,6 +22,14 @@ class UploadsController < ApplicationController
   def edit
   end
 
+  def authenticate_owner
+    set_upload
+    if @upload.accesses.owner.first.user == current_user
+    else
+      redirect_to root_path
+    end
+  end
+
   def decrypt
     if @upload.users.include? current_user
       parsed = URI::parse(@upload.data.url)
@@ -34,26 +43,21 @@ class UploadsController < ApplicationController
   end
 
   def share
-    if @upload.users.include? current_user
-      puts params
-      if params[:user][:email]
-        @user = User.find_by_email(params[:user][:email])
-        if @user
-          @access = Access.new(user: @user, upload: @upload, kind: :shared)
-          if @access.save
-            @upload.accesses << @access
-            redirect_to root_path, notice: "File Shared"
-          else
-            redirect_to edit_upload_path(@upload), alert: "Error Sharing"
-          end
+    if params[:user][:email]
+      @user = User.find_by_email(params[:user][:email])
+      if @user
+        @access = Access.new(user: @user, upload: @upload, kind: :shared)
+        if @access.save
+          @upload.accesses << @access
+          redirect_to edit_upload_path(@upload), notice: "File Shared"
         else
-          redirect_to edit_upload_path(@upload), alert: "Unregistered Email"
+          redirect_to edit_upload_path(@upload), alert: "Error Sharing"
         end
       else
-        redirect_to edit_upload_path(@upload), alert: "No email provided"
+        redirect_to edit_upload_path(@upload), alert: "Unregistered Email"
       end
     else
-      redirect_to root_path, alert: "Nice try"
+      redirect_to edit_upload_path(@upload), alert: "No email provided"
     end
   end
 

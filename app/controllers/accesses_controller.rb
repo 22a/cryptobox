@@ -54,9 +54,10 @@ class AccessesController < ApplicationController
   # DELETE /accesses/1
   # DELETE /accesses/1.json
   def destroy
+    @upload = Upload.find_by_id(@access.upload_id)
     @access.destroy
     respond_to do |format|
-      format.html { redirect_to accesses_url, notice: 'Access was successfully destroyed.' }
+      format.html { redirect_to edit_upload_path(@upload), notice: 'Access was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

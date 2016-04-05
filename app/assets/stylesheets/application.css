@@ -19,3 +19,18 @@
   width: 80vw;
   margin-left: 10vw;
 }
+.centered {
+  text-align: center;
+}
+.centered-upload {
+  margin: 0 auto;
+}
+.float-right {
+  float: right;
+}
+.home-message {
+  padding-top: 100px;
+}
+.tiny-pad {
+  padding-top: 10px;
+}

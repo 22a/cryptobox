@@ -1,11 +1,29 @@
-<h1>Editing Upload</h1>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <h1 class="centered">Share Upload</h1>
 
-<%= render 'form' %>
+    <div class="list-group">
+      <% @upload.users.find_each do |user| %>
+        <div class="list-group-item">
+          <%= user.email %>
+          <span class="float-right">
+            <% if user != current_user %>
+              <%= link_to "remove access", access_path(Access.where(user_id: user.id, upload_id: @upload.id).first), method: :delete %>
+            <% else %>
+              owner
+            <% end%>
+          </span>
+        </div>
+      <% end %>
+    </div>
 
-share email:
-<p>
-  <%= form_tag("share", method: "post") do %>
-    <%= email_field(:user, :email) %>
-    <%= submit_tag("Share") %>
-  <% end %>
-</p>
+    <%= form_tag("share", method: "post") do %>
+      <div class="input-group">
+        <%= email_field(:user, :email, class: "form-control") %>
+        <span class="input-group-btn">
+          <%= submit_tag("Share", class: "btn btn-default") %>
+        </span>
+      </div>
+    <% end %>
+  </div>
+</div>
